@@ -1,56 +1,27 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/azure-terraform
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
 {
-	"name": "Azure Terraform (Community)",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"args": { 
-			"TERRAFORM_VERSION": "0.14.5",
-			"TFLINT_VERSION": "0.24.1",
-			"TERRAGRUNT_VERSION": "0.28.1",
-			"INSTALL_AZURE_CLI": "true",
-			"INSTALL_DOCKER": "true",
-			"INSTALL_NODE": "true"
-		}
-	},
-	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
-	"overrideCommand": false,
-	"runArgs": ["--env-file",".devcontainer/devcontainer.env"],
-    "remoteEnv": {
-		// Sets environment variables required for terrafom remote backend
-		"TF_BACKEND_RESOURCE_GROUP" : "${containerEnv:TF_BACKEND_RESOURCE_GROUP}",
-		"TF_BACKEND_LOCATION": "${containerEnv:TF_BACKEND_LOCATION}",
-		"TF_BACKEND_STORAGE_ACCOUNT" : "${containerEnv:TF_BACKEND_STORAGE_ACCOUNT}",                
-		"TF_BACKEND_CONTAINER" : "${containerEnv:TF_BACKEND_CONTAINER}",
-		"TF_BACKEND_KEY" : "${containerEnv:TF_BACKEND_KEY}"
-
-		// Use 'TF_VAR' prefix to set input variables for terraform templates
-		// "TF_VAR_rg_name":  "${containerEnv:TF_VAR_RG_NAME}"
-	},
-	// Set *default* container specific settings.json values on container create.
-	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash",
-		"terraform.languageServer": {
-			"enabled": true,
-			"args": []
-		},
-		"azureTerraform.terminal": "integrated"
+	"name": "Ubuntu",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/base:jammy",
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {},
+		"ghcr.io/devcontainers-contrib/features/express-generator:2": {},
+		"ghcr.io/devcontainers-contrib/features/typescript:2": {}
 	},
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"hashicorp.terraform",
-		"ms-vscode.azurecli",
-		"ms-azuretools.vscode-azureterraform",
-		"ms-azuretools.vscode-docker"
-	],
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "terraform --version",
+	"postCreateCommand": "cd web/ && npm i && cd .."
 
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
 }
